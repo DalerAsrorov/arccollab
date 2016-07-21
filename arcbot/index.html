@@ -1,0 +1,297 @@
+<html>
+    <head>
+
+        <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+
+        <script>
+        var config = {
+                 apiKey: "AIzaSyB6w2YXSfwIE1E83wT39YrHTODl7QojHWA",
+                 authDomain: "smartcollab-f40b2.firebaseapp.com",
+                 databaseURL: "https://smartcollab-f40b2.firebaseio.com",
+                 storageBucket: "smartcollab-f40b2.appspot.com",
+               };
+        firebase.initializeApp(config);
+            var usersRef = firebase.database().ref().child("users");
+            usersRef.set({
+                arcbot: {
+                    name:"Arcbot"
+                }
+            });
+            present("arcbot");
+            get_messages();
+
+        function get_messages(){
+            console.log("inside get messages");
+            var newItems = false;
+            var eventsList = new Firebase('https://smartcollab-f40b2.firebaseio.com/messages/');
+
+            eventsList.on('child_added', function(message) {
+              if (!newItems) return;
+              sender=message.val()['user']['sender_userName'];
+              var text_message = message.val()['text'];
+              for (var i=0;i<message.val()['user']['receiver_userName'].length;i++){
+                  if(message.val()['user']['receiver_userName'][i].indexOf('Arcbot') > -1) {
+                      invoke_bot(text_message,sender);
+                      //break;
+                  }
+              }
+
+            });
+            eventsList.once('value', function(messages) {
+              newItems = true;
+            });
+
+}
+      function invoke_bot(message,receiver){
+          console.log("bot called");
+         // console.log(message);
+          message=message.replace(/ +(?= )/g,'');
+          console.log(message);
+          if(message.indexOf('hello') > -1) {
+              invoke_hello(receiver);
+          }
+          if(message.indexOf('time') > -1) {
+              invoke_time(receiver);
+          }
+          if(message.indexOf('play video') > -1) {
+              invoke_youtube(message,receiver);
+          }
+          if(message.indexOf('open web map ') > -1){
+              invoke_webmap(message,receiver);
+          }
+          if(message.indexOf('open web mapping application') > -1){
+              invoke_webmappingapplication(message,receiver);
+          }
+
+       }
+     function invoke_hello(receiver){
+         var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
+         var obj = {
+           user: {
+             receiver_userName: [receiver],
+             sender_userName: "Arcbot"
+           },
+           text: "hello"
+
+         }
+
+         dbRef.set(obj);
+     }
+
+     function invoke_time(receiver){
+         var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
+         var obj = {
+           user: {
+             receiver_userName: [receiver],
+             sender_userName: "Arcbot"
+           },
+           text: new Date().toUTCString()
+
+         }
+
+         dbRef.set(obj);
+     }
+     function invoke_youtube(message,receiver){
+         message=message.replace("play video ","");
+         //message=message.split(" ");
+         console.log("here");
+         console.log(message);
+
+
+
+             if(message.indexOf('www')>-1){
+                 url=message;
+                 console.log(url);
+                 url=url.replace("watch?v=","embed/");
+                 text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
+                 //
+                 console.log(text);
+                 write_to_db(receiver,text);
+
+             }
+             else {
+                 if(message.split(" ").length>1){
+                     message=message.split(" ");
+                     message=message.join("+");
+                 }
+                 url="http://localhost:5050/youtube/"+message;
+                 console.log("url"+url);
+
+        $.ajax({
+                    type: 'GET',
+
+                    url: url,
+                    crossDomain:true,
+                    //dataType:'jsonp',
+                    success: function( data, textStatus, jQxhr ){
+                        console.log( data );
+                        url = data[0]['href']
+                        url=url.replace("watch?v=","embed/");
+                        text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
+                        write_to_db(receiver,text);
+
+                    },
+                    error: function( jqXhr, textStatus, errorThrown ){
+                        alert("failed");
+                        console.log( errorThrown );
+                    }
+                });
+
+             }
+         }
+function write_to_db(receiver,text){
+         var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
+         var obj = {
+           user: {
+             receiver_userName: [receiver],
+             sender_userName: "Arcbot"
+           },
+           text: text
+
+         }
+
+         dbRef.set(obj);
+     }
+       function present(user_id){
+           var amOnline = new Firebase('https://smartcollab-f40b2.firebaseio.com/.info/connected');
+           var userRef = new Firebase('https://smartcollab-f40b2.firebaseio.com/presence/' + user_id);
+           amOnline.on('value', function(snapshot) {
+               if (snapshot.val()) {
+                 userRef.onDisconnect().remove();
+                 userRef.set(true);
+               }
+             });
+       }
+
+       function invoke_webmap(message,receiver){
+           console.log("web maps");
+           message=message.replace("open web map ","");
+           console.log(message);
+           split_messages=message.split(" ");
+           for(var i = 0;i<split_messages.length;i++){
+               if(split_messages[i]===''){
+                   split_messages.splice(i,1);
+               }
+           }
+           console.log(split_messages);
+           var Exp = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
+
+
+               if(message.indexOf('www')>-1){
+                   url=message;
+                   console.log(url);
+                   text="<iframe class='iframe-style'  height=\"390\"  src=\"" +url+ "\" ></iframe>";
+                   //
+                   console.log(text);
+                   write_to_db(receiver,text);
+
+               }
+               else if(split_messages.length==1 && split_messages[0].match(Exp) && split_messages[0].length==32){
+                   console.log("hello im an id");
+                   url="http://www.arcgis.com/home/webmap/viewer.html?webmap="+split_messages[0];
+                   text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
+                   console.log(text);
+                   write_to_db(receiver,text);
+               }
+               else {
+
+                console.log("keyword found");
+                baseURL="http://www.arcgis.com/sharing/rest/search?num=100&sortField=created&sortOrder=desc&f=pjson&q=type:Web%20Map%20"+message;
+                console.log(baseURL);
+
+          $.ajax({
+                      type: 'GET',
+
+                      url: baseURL,
+                      crossDomain:true,
+                      dataType:'jsonp',
+                      success: function( data, textStatus, jQxhr ){
+
+                          console.log( data['results'][0]['id'] );
+
+                           url = "http://www.arcgis.com/home/webmap/viewer.html?webmap="+data['results'][0]['id']
+
+                           text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
+                           write_to_db(receiver,text);
+
+                      },
+                      error: function( jqXhr, textStatus, errorThrown ){
+                          alert("failed");
+                          console.log( errorThrown );
+                      }
+                  });
+
+               }
+           }
+
+           function invoke_webmappingapplication(message,receiver){
+               console.log("web mapping application");
+               message=message.replace("open web mapping application ","");
+
+               console.log(message);
+               split_messages=message.split(" ");
+               for(var i = 0;i<split_messages.length;i++){
+                   if(split_messages[i]===''){
+                       split_messages.splice(i,1);
+                   }
+               }
+               console.log(split_messages);
+               var Exp = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
+
+
+                   if(message.indexOf('www')>-1){
+                       url=message;
+                       console.log(url);
+                       //url=url.replace("watch?v=","embed/");
+                       text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
+                       //
+                       console.log(text);
+                       write_to_db(receiver,text);
+
+                   }
+                   else if(split_messages.length==1 && split_messages[0].match(Exp) && split_messages[0].length==32){
+                       console.log("hello im an id");
+                       url="http://www.arcgis.com/home/webmap/viewer.html?webmap="+split_messages[0];
+                       text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
+                       console.log(text);
+                       write_to_db(receiver,text);
+                   }
+                   else {
+
+                    console.log("keyword found");
+                    baseURL="http://www.arcgis.com/sharing/rest/search?num=100&sortField=created&sortOrder=desc&f=pjson&q=type:Web%20Mapping%20Application%20"+message;
+                    console.log(baseURL);
+              $.ajax({
+                          type: 'GET',
+
+                          url: baseURL,
+                          crossDomain:true,
+                          dataType:'jsonp',
+                          success: function( data, textStatus, jQxhr ){
+
+                              console.log( data['results'][0]['id'] );
+
+                               url = "http://www.arcgis.com/home/webmap/viewer.html?webmap="+data['results'][0]['id']
+                               text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
+                               write_to_db(receiver,text);
+
+                          },
+                          error: function( jqXhr, textStatus, errorThrown ){
+                              alert("failed");
+                              console.log( errorThrown );
+                          }
+                      });
+
+                   }
+               }
+
+
+
+        </script>
+        <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
+    </head>
+    <body>
+    </body>
+</html>
