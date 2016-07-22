@@ -1,4 +1,5 @@
 generateJoke();
+
 var allOnlineUsers = [];
 var config = {
          apiKey: "AIzaSyB6w2YXSfwIE1E83wT39YrHTODl7QojHWA",
@@ -102,13 +103,13 @@ firebase.initializeApp(config);
           return count;
       }
 
-
-      $( "#send-command-button" ).click(function() {
+      $("#command-form").submit(function( event ) {
+        event.preventDefault();
         var text = $('#input-chat').val();
 
         var dbRef = firebase.database().ref().child('messages');
         var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
-        value=get_senders(allOnlineUsers,text)
+        value = get_senders(allOnlineUsers,text)
         text_msg=value[0];
         receivers=value[1];
         var obj = {
@@ -123,6 +124,27 @@ firebase.initializeApp(config);
 
         $('#input-chat').val('');
       });
+
+      // $( "#send-command-button" ).click(function() {
+      //   var text = $('#input-chat').val();
+      //
+      //   var dbRef = firebase.database().ref().child('messages');
+      //   var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
+      //   value=get_senders(allOnlineUsers,text)
+      //   text_msg=value[0];
+      //   receivers=value[1];
+      //   var obj = {
+      //     user: {
+      //       sender_userName: arcUserMessageInfo.username,
+      //       receiver_userName: receivers
+      //     },
+      //     text: text_msg
+      //   }
+      //
+      //   dbRef.set(obj);
+      //
+      //   $('#input-chat').val('');
+      // });
 
 
       // $('#input-chat').keydown(function(event) {

@@ -32,11 +32,16 @@ html, body, #wrapper {
 
 .main-frame {
   height: 790px;
+  padding: 0;
+}
+
+.map-iframe {
+  height: 650px;
 }
 
 .chat-frame {
   padding: 0;
-  border: 1px solid lightgrey;``
+  border: 1px solid lightgrey;
   border-right: none;
   height: 840px;
 }

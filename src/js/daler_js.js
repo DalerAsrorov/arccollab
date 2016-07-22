@@ -136,61 +136,9 @@ function addNewMessage(text, date, senderName) {
 
 // creating new tab with jQuery
 function createTab(senderName) {
-
-
-
    $('#user-tab').append('<li class="current-active"><a href=\"' + '#' + senderName +  '\">' + senderName + '</a></li>');
    // adding the frame with the content
-
-
 }
-
-// var app = angular.module("app", []);
-
-
-// $( "#send-command-button" ).click(function() {
-//   var text = $('#input-chat').val();
-//
-//   if(text) {
-//     text = text.trim();
-//     var splitT = text.split(" ");
-//     for(var i = 0; i < splitT.length; i++) {
-//       if(splitT[i].indexOf("@") > -1) {
-//
-//
-//         var usernameStr = splitT[i].slice(0,-1);
-//         var tabUserId = usernameStr.substr(1); // remove @
-//         var exists = jQuery.inArray(usernameStr, splitT);
-//         if(exists) { // the username is on the list of online participants
-//           // var tabs = $( "#tabs" ).tabs();
-//            var tabs = $( "#tabs" ).tabs();
-//              tabs.find( ".ui-tabs-nav" ).sortable({
-//               axis: "x",
-//               stop: function() {
-//                 tabs.tabs( "refresh" );
-//               }
-//            });
-//           var index = $('#tabs a[href=\"' + "#" + tabUserId + '\"]').parent().index();
-//           console.log('index', index);
-//           $('#user-tab').append('<li class="current-active"><a href=\"' + '#' + tabUserId +  '\">' + tabUserId + '</a></li>');
-//           $('#tabs').append('<div style="display: block;" id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame">' +text
-//               + ' </div>' + '</div>');
-//           $("#tabs").tabs("option", "active", 0);
-//
-//           $( "#tabs" ).tabs('refresh');
-//         }
-//         break; // stop iterating through the array once you found the included user -- will be removed if we need multiple user addition
-//       }
-//     }
-//     // var usersArray = get_senders(allOnlineUsers , text);
-//     // var alphaIndex = str.indexOf("@");
-//     // var username = str.substr(str.indexOf("@"), );
-//     // var bool = $.inArray( 5 + 5, [ "8", "9", "10", 10 + "" ] );
-//
-//   } else {
-//     console.log('no text');
-//   }
-// });
 
 function generateJoke() {
   $.get("http://api.icndb.com/jokes/random", function(data) {
