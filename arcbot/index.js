@@ -3,13 +3,11 @@ var app = express();
 var http_scrape=require('./http_module')
 app.use(express.static(__dirname + '/'));
 
-var server = app.listen(5050, function () {
+var server = app.listen(5000, function () {
   var host = server.address().address
   var port = server.address().port
 //
   console.log("The Bot app is listening at http://%s:%s", host, port)
-
-
 });
 
 app.get('/youtube/:query', function(req, res) {

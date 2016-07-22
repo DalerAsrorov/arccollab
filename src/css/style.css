@@ -39,6 +39,26 @@ html, body, #wrapper {
   height: 650px;
 }
 
+.particpant-caption {
+  padding: 5px;
+  position: relative;
+  top: -20px;
+}
+
+.status {
+  position: relative;
+  right: 160px;
+  color: #5a9359;
+  font-size: 13px;
+}
+
+.status-arcbot {
+  position: relative;
+  right: 60px;
+  color: #5a9359;
+  font-size: 13px;
+}
+
 .chat-frame {
   padding: 0;
   border: 1px solid lightgrey;

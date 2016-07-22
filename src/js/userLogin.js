@@ -56,12 +56,6 @@ firebase.initializeApp(config);
         console.log('got credentials');
       });
 
-      on(dom.byId("sign-out"), "click", function() {
-        esriId.destroyCredentials();
-        localStorage.removeItem('login');
-        window.location.reload();
-      });
-
       function displayItems() {
 
         var portal = new Portal();
@@ -95,54 +89,36 @@ firebase.initializeApp(config);
           return count;
       }
 
+      function getAvatar(email, callback) {
+        $.get("/api/gravatar/" + email, function(link) {
+          var strUrl = link.toString();
+          callback(strUrl);
+        });
+      }
 
+      function add_user(portal) {
+         user_id=portal['user']['username'];
+         email=portal['user']['email'];
+         full_name=portal['user']['fullName'];
+         last_login=portal['user']['lastLogin'];
+         org_id=portal['user']['orgId'];
 
-
-      $('#input-chat').keydown(function(event) {
-        if (event.keyCode == 13) {
-          var text = $('#input-chat').val();
-
-
-          var dbRef = firebase.database().ref().child('messages');
-
-          var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
-
-          var obj = {
-            user: {
-              userName: arcUserMessageInfo.username,
-              fullName: arcUserMessageInfo.fullName
-            },
-            text: text
-
-
-          }
-
-          dbRef.set(obj);
-
-          $('#input-chat').val('');
-        }
-      });
-
-      function add_user(portal){
-
-          user_id=portal['user']['username'];
-          email=portal['user']['email'];
-          full_name=portal['user']['fullName'];
-          last_login=portal['user']['lastLogin'];
-          org_id=portal['user']['orgId'];
-
-
-         var usersRef = firebase.database().ref().child("users").child(org_id).child(user_id);
-
-         usersRef.set({
-             last_login:last_login,
-             email:email,
-             full_name:full_name
+         getAvatar(email, function(result) {
+            var usersRef = firebase.database().ref().child("users").child(org_id).child(user_id);
+            localStorage.removeItem('gravatar');
+            localStorage.setItem('gravatar', result);
+            localStorage.setItem('test', 'test');
+            usersRef.set({
+                last_login:last_login,
+                email:email,
+                test: 'test',
+                avatar: result,
+                full_name:full_name
+            });
+            present(org_id,user_id);
+            temp();
          });
-         //calls presence function
-         present(org_id,user_id);
-         temp();
-         //get_messages();
+
       }
 
       function get_messages() {

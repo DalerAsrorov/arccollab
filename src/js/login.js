@@ -153,27 +153,37 @@ firebase.initializeApp(config);
       //   }
       // });
 
-      function add_user(portal){
+      function getAvatar(email, callback) {
+        $.get("/api/gravatar/" + email, function(link) {
+          var strUrl = link.toString();
+          callback(strUrl);
+        });
+      }
 
-          user_id=portal['user']['username'];
-          email=portal['user']['email'];
-          full_name=portal['user']['fullName'];
-          last_login=portal['user']['lastLogin'];
-          org_id=portal['user']['orgId'];
-          me=user_id;
+      function add_user(portal) {
+         user_id=portal['user']['username'];
+         email=portal['user']['email'];
+         full_name=portal['user']['fullName'];
+         last_login=portal['user']['lastLogin'];
+         org_id=portal['user']['orgId'];
+         me=user_id;
 
-         var usersRef = firebase.database().ref().child("users").child(org_id).child(user_id);
+         getAvatar(email, function(gravatar) {
+            var usersRef = firebase.database().ref().child("users").child(org_id).child(user_id);
 
-         usersRef.set({
-             last_login:last_login,
-             email:email,
-             full_name:full_name
-         });
-         //calls presence function
-         present(org_id,user_id);
-         temp();
-         //get_messages();
-        add_archived_messages(me);
+            usersRef.set({
+                last_login:last_login,
+                email:email,
+                gravatar: gravatar,
+                full_name:full_name
+            });
+            //calls presence function
+            present(org_id,user_id);
+            temp();
+            //get_messages();
+           add_archived_messages(me);
+         })
+
       }
 
     //   function get_presence() {
@@ -256,7 +266,6 @@ firebase.initializeApp(config);
     //   }
 
       function getOnlineUsers(callback) {
-        console.log(org_id);
         var dbRef = firebase.database().ref().child('users').child(org_id);
          dbRef.on('value', function(snap) {
            callback(snap.val());
@@ -277,20 +286,22 @@ firebase.initializeApp(config);
       function temp() {
         getOnlineUsers(function(data) {
           $('#list-of-users').html('');
-          console.log(data);
           var arrayOfUsers = convertToArrayOfOrgs(data);
           allOnlineUsers = [];
           for(var i = 0; i < arrayOfUsers.length; i++) {
             allOnlineUsers.push("@" + arrayOfUsers[i].org);
-            if(arrayOfUsers[i].org==me){
-                $('#list-of-users').append("<li>" + arrayOfUsers[i].org + " (You)</li>")
+            if(arrayOfUsers[i].org==me) {
+                $('#list-of-users').append("<li> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <span class='particpant-caption'>" + arrayOfUsers[i].org + " (You) </span> <span class='status'>Online</span></li>");
             }
-            else{
-                $('#list-of-users').append("<li>" + arrayOfUsers[i].org + "</li>")
+            else {
+                $('#list-of-users').append("<li> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <span class='particpant-caption'>" + arrayOfUsers[i].org + " </span> <span class='status'>Online</span></li>");
             }
           }
-          allOnlineUsers.push("@Arcbot");
-          $('#list-of-users').append("<li class='bot-li'>" + "Arcbot" + "</li>")
+          allOnlineUsers.push("@arcbot");
+          getAvatar('arcbot@esri.com', function(avatar) {
+            $('#list-of-users').append("<li  class='bot-li'> <img class='gravatar' src=\"" +  avatar +  "\"/> <span class='particpant-caption'>" + 'arcbot' + " </span> <span class='status-arcbot'>Listening...</span></li>");
+          });
+
 
 
           // $("#input-chat").autocomplete({
