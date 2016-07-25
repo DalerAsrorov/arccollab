@@ -1,4 +1,5 @@
 var usersIncluded = [];
+
 function add_archived_messages(me){
     var newItems = false;
     var eventsList = new Firebase('https://smartcollab-f40b2.firebaseio.com/messages/');
@@ -118,6 +119,7 @@ function addExistingMessage(text, date, senderName) {
 }
 
 function initializeTab() {
+  console.log('tab initialized');
   $( "#tabs" ).tabs();
   var tabs = $( "#tabs" ).tabs();
     tabs.find( ".ui-tabs-nav" ).sortable({
@@ -140,16 +142,20 @@ function createTab(senderName) {
    // adding the frame with the content
 }
 
+function createTabFromSelected(usernameCssClass) {
+ $('#user-tab').append('<li class="current-active selected-' + usernameCssClass + '"><a href=\"' + '#' + usernameCssClass +  '\">' + usernameCssClass + '</a></li>');
+}
+
 function generateJoke() {
   $.get("http://api.icndb.com/jokes/random", function(data) {
     if(data.type === 'success') {
       var category = data.value.categories[0];
       var joke = data.value.joke;
-
+      $('#tabs').append('<div class="joke-div">'
+      + '<span class="joke-span">\"' + joke + '\"</span>'
+      + '</div>')
     } else {
 
     }
-    console.log('joke');
-    console.log(data);
   });
 }

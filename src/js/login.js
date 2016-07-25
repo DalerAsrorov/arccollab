@@ -7,6 +7,8 @@ var config = {
          databaseURL: "https://smartcollab-f40b2.firebaseio.com",
          storageBucket: "smartcollab-f40b2.appspot.com",
        };
+var userSelectedClass = "";
+
 firebase.initializeApp(config);
     var org_id="";
     require([
@@ -103,9 +105,21 @@ firebase.initializeApp(config);
           return count;
       }
 
+      function removeTab() {
+        var cssClassOfUserSelectedTab = '.' + userSelectedClass;
+        $(cssClassOfUserSelectedTab).remove();
+        userSelectedClass = "";
+      }
+
       $("#command-form").submit(function( event ) {
         event.preventDefault();
         var text = $('#input-chat').val();
+
+        // remove joke
+        $('.joke-div').remove();
+
+        //remove tab
+        removeTab();
 
         var dbRef = firebase.database().ref().child('messages');
         var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
@@ -288,21 +302,34 @@ firebase.initializeApp(config);
           $('#list-of-users').html('');
           var arrayOfUsers = convertToArrayOfOrgs(data);
           allOnlineUsers = [];
+
+
           for(var i = 0; i < arrayOfUsers.length; i++) {
             allOnlineUsers.push("@" + arrayOfUsers[i].org);
+
+            // open tab for a particular user and
+            // attach name to the input field
+            getSelectedUser = function(username) {
+              var selectUser = 'selected-' + username;
+              initializeTab();
+              createTabFromSelected(username);
+              refreshTabs();
+              $('#input-chat').val('@' + username + ',');
+            }
+
+            userSelectedClass = "selected-" + arrayOfUsers[i].org;
+
             if(arrayOfUsers[i].org==me) {
-                $('#list-of-users').append("<li> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <span class='particpant-caption'>" + arrayOfUsers[i].org + " (You) </span> <span class='status'>Online</span></li>");
+                $('#list-of-users').append("<li class='select-user' onclick=getSelectedUser(\"" + arrayOfUsers[i].org  + "\")> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <span class='particpant-caption'>" + arrayOfUsers[i].org + " (You)</span> <span class='status'>Online</span></li>");
             }
             else {
-                $('#list-of-users').append("<li> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <span class='particpant-caption'>" + arrayOfUsers[i].org + " </span> <span class='status'>Online</span></li>");
+                $('#list-of-users').append("<li class='select-user' onclick=getSelectedUser(\"" + arrayOfUsers[i].org  + "\")> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <span class='particpant-caption'>" + arrayOfUsers[i].org + " </span> <span class='status'>Online</span></li>");
             }
           }
           allOnlineUsers.push("@arcbot");
           getAvatar('arcbot@esri.com', function(avatar) {
-            $('#list-of-users').append("<li  class='bot-li'> <img class='gravatar' src=\"" +  avatar +  "\"/> <span class='particpant-caption'>" + 'arcbot' + " </span> <span class='status-arcbot'>Listening...</span></li>");
+            $('#list-of-users').append("<li class='bot-li select-user' onclick=getSelectedUser(\"" + "arcbot" + "\")> <img class='gravatar' src=\"" +  avatar +  "\"/> <span class='particpant-caption'>" + 'arcbot' + " </span> <span class='status-arcbot'>Listening...</span></li>");
           });
-
-
 
           // $("#input-chat").autocomplete({
           //   source: allOnlineUsers
@@ -310,7 +337,7 @@ firebase.initializeApp(config);
           $("#input-chat")
           .on( "keydown", function( event ) {
             if ( event.keyCode === $.ui.keyCode.TAB &&
-                $(this).autocomplete("instance").menu.active) {
+              $(this).autocomplete("instance").menu.active) {
               event.preventDefault();
             }
           })

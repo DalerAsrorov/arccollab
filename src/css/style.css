@@ -124,6 +124,15 @@ nav {
   border: 1px solid black;
 }
 
+.joke-div {
+  padding: 10px;
+  font-style: italic;
+  margin-top: 200px;
+  color: lightgrey;
+  text-align: center;
+  font-size: 34px;
+}
+
 .chat-header {
   background: #0079c1;
   padding: 3px;
