@@ -23,7 +23,8 @@ function add_archived_messages(me){
         if(senderName === me && receiverIsTabbed >= 0) {
           console.log("ep1");
           //addExistingMessage(text, date, senderName);
-          $("div " + "#" +  receiverName).append( '<div class="frame">me:' + nDate + ": " + text + ' </div>');
+          $("div " + "#" +  receiverName).append( '<div class="frame" id=\"' + receiverName + '\">me:' + nDate + ": " + text + ' </div>');
+          //$( "#tabs" ).tabs({ active: # });
           refreshTabs();
         }
         else if(senderName === me && receiverIsTabbed < 0){
@@ -58,7 +59,7 @@ function add_archived_messages(me){
           refreshTabs();
           usersIncluded.push(senderName);
       }
-  //  }
+
 
 
 
@@ -109,17 +110,14 @@ function add_archived_messages(me){
 }
 
 function refreshTabs() {
-  console.log("ep3");
   $( "#tabs" ).tabs('refresh');
 };
 
 function addExistingMessage(text, date, senderName) {
-  console.log("ep2");
   $("div " + "#" +  senderName).append( '<div class="frame">' + date + ": " + text + ' </div>');
 }
 
 function initializeTab() {
-  console.log('tab initialized');
   $( "#tabs" ).tabs();
   var tabs = $( "#tabs" ).tabs();
     tabs.find( ".ui-tabs-nav" ).sortable({
@@ -138,12 +136,18 @@ function addNewMessage(text, date, senderName) {
 
 // creating new tab with jQuery
 function createTab(senderName) {
-   $('#user-tab').append('<li class="current-active"><a href=\"' + '#' + senderName +  '\">' + senderName + '</a></li>');
+   $('#user-tab').append('<li class="' + senderName +  '\"><a href=\"' + '#' + senderName +  '\">' + senderName + '</a></li>');
+   var tabIndex = $('.selected-' + senderName).prop('tabindex');
+   // $( "#tabs" ).tabs({active: tabIndex}'option', 'active', tabIndex );
    // adding the frame with the content
 }
 
 function createTabFromSelected(usernameCssClass) {
- $('#user-tab').append('<li class="current-active selected-' + usernameCssClass + '"><a href=\"' + '#' + usernameCssClass +  '\">' + usernameCssClass + '</a></li>');
+ $('#user-tab').append('<li class="selected-' + usernameCssClass + '"><a href=\"' + '#' + usernameCssClass +  '\">' + usernameCssClass + '</a></li>');
+ var tabIndex = $('.selected-' + usernameCssClass).prop('tabindex');
+ $( "#tabs" ).tabs('option', 'active', tabIndex);
+ console.log('createTabFromSelected()');
+
 }
 
 function generateJoke() {

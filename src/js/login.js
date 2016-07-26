@@ -114,11 +114,9 @@ firebase.initializeApp(config);
       $("#command-form").submit(function( event ) {
         event.preventDefault();
         var text = $('#input-chat').val();
+        //console.log(selected);
 
-        // remove joke
         $('.joke-div').remove();
-
-        //remove tab
         removeTab();
 
         var dbRef = firebase.database().ref().child('messages');
@@ -313,8 +311,10 @@ firebase.initializeApp(config);
               var selectUser = 'selected-' + username;
               initializeTab();
               createTabFromSelected(username);
+              $('.joke-div').remove();
               refreshTabs();
               $('#input-chat').val('@' + username + ',');
+
             }
 
             userSelectedClass = "selected-" + arrayOfUsers[i].org;
