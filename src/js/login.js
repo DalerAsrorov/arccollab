@@ -1,5 +1,7 @@
 generateJoke();
 
+var success;
+var endpoint;
 var allOnlineUsers = [];
 var config = {
          apiKey: "AIzaSyB6w2YXSfwIE1E83wT39YrHTODl7QojHWA",
@@ -105,6 +107,9 @@ firebase.initializeApp(config);
           return count;
       }
 
+      success="true";
+      endpoint = "";
+
       function removeTab() {
         var cssClassOfUserSelectedTab = '.' + userSelectedClass;
         $(cssClassOfUserSelectedTab).remove();
@@ -117,7 +122,8 @@ firebase.initializeApp(config);
         //console.log(selected);
 
         $('.joke-div').remove();
-        removeTab();
+      
+        // removeTab();
 
         var dbRef = firebase.database().ref().child('messages');
         var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
@@ -129,13 +135,22 @@ firebase.initializeApp(config);
             sender_userName: arcUserMessageInfo.username,
             receiver_userName: receivers
           },
-          text: text_msg
+          text: text_msg,
+          image: image,
+          success: success,
+          endpoint: endpoint
         }
 
+        image = "";
         dbRef.set(obj);
-
         $('#input-chat').val('');
+
+        console.log('reached tabs');
       });
+
+      function goToBottomOfDiv(id) {
+        $(id).scrollTop($(id)[0].scrollHeight);
+      }
 
       // $( "#send-command-button" ).click(function() {
       //   var text = $('#input-chat').val();
@@ -231,33 +246,33 @@ firebase.initializeApp(config);
             });
       }
 
-      displayMyMessages();
-
-       function displayMyMessages() {
-         var dbRef = firebase.database().ref().child('messages');
-         dbRef.on('value', function(snap) {
-           var messages = snap.val();
-           //console.log(messages);
-           $('#frame').html('');
-           for(var key in messages) {
-              // console.log(messages[key]);
-               if(messages[key]['user']['sender_userName']==me){
-                   //console.log("if");
-                   $('#frame').append('<div class="message">' + '<span class="message-name">' + "me" + ": " + '</span>' + messages[key].text +  '</div>');
-               }
-               else{
-                   //console.log("if");
-                   for(var i=0;i<messages[key]['user']['receiver_userName'].length;i++) {
-                       if(messages[key]['user']['receiver_userName'][i] == me){
-                           $('#frame').append('<div class="message">' + '<span class="message-name">' + messages[key]['user']['sender_userName'] + ": " + '</span>' + messages[key].text +  '</div>');
-                           break;
-                       }
-                   }
-               }
-             }
-
-         });
-       }
+      // displayMyMessages();
+      //
+      //  function displayMyMessages() {
+      //    var dbRef = firebase.database().ref().child('messages');
+      //    dbRef.on('value', function(snap) {
+      //      var messages = snap.val();
+      //      //console.log(messages);
+      //      $('#frame').html('');
+      //      for(var key in messages) {
+      //         // console.log(messages[key]);
+      //          if(messages[key]['user']['sender_userName']==me){
+      //              //console.log("if");
+      //              $('#frame').append('<div class="message my-message">' + '<span class="message-name">' + "me" + ": " + '</span>' + messages[key].text +  '</div>');
+      //          }
+      //          else{
+      //              //console.log("if");
+      //              for(var i=0;i<messages[key]['user']['receiver_userName'].length;i++) {
+      //                  if(messages[key]['user']['receiver_userName'][i] == me){
+      //                      $('#frame').append('<div class="message others-message">' + '<span class="message-name">' + messages[key]['user']['sender_userName'] + ": " + '</span>' + messages[key].text +  '</div>');
+      //                      break;
+      //                  }
+      //              }
+      //          }
+      //        }
+      //
+      //    });
+      //  }
 
       function convertToArrayOfOrgs(obj) {
         var array = [];
@@ -308,13 +323,14 @@ firebase.initializeApp(config);
             // open tab for a particular user and
             // attach name to the input field
             getSelectedUser = function(username) {
-              var selectUser = 'selected-' + username;
-              initializeTab();
-              createTabFromSelected(username);
-              $('.joke-div').remove();
-              refreshTabs();
-              $('#input-chat').val('@' + username + ',');
 
+              var selectUser = 'selected-' + username;
+              // initializeTab();
+              // createTabFromSelected(username);
+              $('.joke-div').remove();
+              $('#input-chat').val('@' + username + ',');
+              $("#input-chat").focus();
+              console.log(username);
             }
 
             userSelectedClass = "selected-" + arrayOfUsers[i].org;

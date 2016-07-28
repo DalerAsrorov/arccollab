@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "random-greetings": "^1.0.5"
+    "object-assign": "^4.1.0"
   }
 }

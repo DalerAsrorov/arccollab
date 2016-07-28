@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-beta.7/css/calcite-web.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css"charset="utf-8">
     <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="node_modules/fine-uploader/fine-uploader/fine-uploader.css" charset="utf-8">
   </head>
   <body>
 
@@ -24,7 +25,7 @@
       <div id="main-section">
         <div class="grid-container leader-1 section-container">
           <div class="grid-example ">
-            <div class="column-6 chat-frame">
+            <div class="col-lg-2 chat-frame">
               <div class="chat-header">
                 <h1>Participants</h1>
               </div>
@@ -33,7 +34,7 @@
                 </ul>
               </div>
             </div>
-            <div class="column-24 main-frame">
+            <div class="col-lg-10 main-frame scroll" id="messagesContent">
               <div id="tabs">
                 <ul id="user-tab">
                   <!-- <li> tags go here from JQuery (daler_js.js)-->
@@ -48,6 +49,7 @@
                     <input name="name" id="input-chat" placeholder="Enter command here..." />
                   </div>
                   <div class="button-input column-4">
+                    <!-- <input type="file" accept="image/*" onchange="loadFile(event)" id="imageUploadNow"> -->
                     <button type="submit" id="send-command-button" name="button">Send</button>
                   </div>
                 </form>
@@ -79,9 +81,11 @@
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
     <script src="js/libs/gravatar.js"></script>
+    <script type="text/javascript" src="node_modules/fine-uploader/fine-uploader/fine-uploader.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
     <script src="https://js.arcgis.com/4.0/"></script>
+    <script type="text/javascript" src="js/global.js"></script>
     <script type="text/javascript" src="js/indhu_js.js"></script>
     <script type="text/javascript" src="js/daler_js.js"></script>
     <script type="text/javascript" src="js/login.js"></script>

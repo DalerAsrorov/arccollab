@@ -121,20 +121,20 @@ firebase.initializeApp(config);
 
       }
 
-      function get_messages() {
-
-        var newItems = false;
-        var eventsList = new Firebase('https://smartcollab-f40b2.firebaseio.com/messages/');
-
-        eventsList.on('child_added', function(message) {
-          if (!newItems) return;
-          var message = message.val();
-
-        });
-        eventsList.once('value', function(messages) {
-          newItems = true;
-        });
-      }
+      // function get_messages() {
+      //
+      //   var newItems = false;
+      //   var eventsList = new Firebase('https://smartcollab-f40b2.firebaseio.com/messages/');
+      //
+      //   eventsList.on('child_added', function(message) {
+      //     if (!newItems) return;
+      //     var message = message.val();
+      //
+      //   });
+      //   eventsList.once('value', function(messages) {
+      //     newItems = true;
+      //   });
+      // }
 
 
       function present(org_id,user_id){
@@ -148,18 +148,18 @@ firebase.initializeApp(config);
             });
       }
 
-      displayAllMessages();
-
-       function displayAllMessages() {
-         var dbRef = firebase.database().ref().child('messages');
-         dbRef.on('value', function(snap) {
-           var messages = snap.val();
-           $('#frame').html('');
-           for(var key in messages) {
-             $('#frame').append('<div class="message">' + '<span class="message-name">' + messages[key].user.fullName + ": " + '</span>' + messages[key].text +  '</div>');
-           }
-         });
-       }
+      // displayAllMessages();
+      //
+      //  function displayAllMessages() {
+      //    var dbRef = firebase.database().ref().child('messages');
+      //    dbRef.on('value', function(snap) {
+      //      var messages = snap.val();
+      //      $('#frame').html('');
+      //      for(var key in messages) {
+      //        $('#frame').append('<div class="message">' + '<span class="message-name">' + messages[key].user.fullName + ": " + '</span>' + messages[key].text +  '</div>');
+      //      }
+      //    });
+      //  }
 
       function convertToArrayOfOrgs(obj) {
         var array = [];

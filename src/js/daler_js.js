@@ -1,40 +1,51 @@
 var usersIncluded = [];
 
+
 function add_archived_messages(me){
     var newItems = false;
     var eventsList = new Firebase('https://smartcollab-f40b2.firebaseio.com/messages/');
+
+
 
     eventsList.on('child_added', function(message) {
       if (!newItems) return;
       key=message.key();
       date=new Date(parseFloat(key));
       var message = message.val();
+      success = message['success'];
+      endpoint = message['endpoint'];
       var text = message['text'];
       var receiverName = message['user']['receiver_userName'][0];
       var senderName = message['user']['sender_userName'];
       var receiverIsTabbed = $.inArray(receiverName, usersIncluded);
       var senderIsTabbed = $.inArray(senderName, usersIncluded);
       console.log("inside child added");
-      console.log("receiver Name "+receiverName);
-      console.log("tab count "+receiverIsTabbed);
-      console.log("users included "+usersIncluded);
-      var nDate = (date.getMonth() + 1)+ "/" +date.getDate()+"/"  +date.getFullYear() + " " + date.getHours() + ":" +date.getMinutes() + ":" +date.getSeconds();
+      console.log(message);
+      // console.log("receiver Name "+receiverName);
+      // console.log("tab count "+receiverIsTabbed);
+      // console.log("users included "+usersIncluded);
+      // console.log('messageObj', message);
+      //var nDate = (date.getMonth() + 1)+ "/" +date.getDate()+"/"  +date.getFullYear() + " " + date.getHours() + ":" +date.getMinutes() + ":" +date.getSeconds();
+      var nDate = date.toLocaleString();
       //for(var each_receiverName in receiverName){
         if(senderName === me && receiverIsTabbed >= 0) {
-          console.log("ep1");
+          console.log("1");
+
           //addExistingMessage(text, date, senderName);
-          $("div " + "#" +  receiverName).append( '<div class="frame" id=\"' + receiverName + '\">me:' + nDate + ": " + text + ' </div>');
+          $("div " + "#" +  receiverName).append( '<div class="frame my-frame"> <div class="me-wrapper"> <div class="header-msg"><span class="msgr">Me </span> <span class="msg-date">' + nDate + "</span> </div> <div class='msg-content'>" + text + '</div> </div> </div>');
           //$( "#tabs" ).tabs({ active: # });
           refreshTabs();
         }
-        else if(senderName === me && receiverIsTabbed < 0){
+        else if(senderName === me && receiverIsTabbed < 0) {
+          console.log("2");
           initializeTab();
           createTab(receiverName);
           //addNewMessage(text, date, senderName);
           var tabUserId = receiverName;
-          $('#tabs ').append('<div style="display: block;" id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame">me:' +
-            nDate + ": " + text
-              + ' </div>' + '</div>');
+
+          $('#tabs ').append('<div id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame my-frame"> <div class="me-wrapper"> <div class="header-msg"><span class="msgr">Me </span> <span class="msg-date">' +
+            nDate + "</span></div> <div class='msg-content'>" + text
+              + ' </div> </div> </div>' + '</div>');
           refreshTabs();
           usersIncluded.push(receiverName);
         }
@@ -42,20 +53,20 @@ function add_archived_messages(me){
     //for(var each_receiverName in receiverName){
       if(receiverName === me && senderIsTabbed >= 0)
       {
+        console.log("3");
 
-        console.log("gjjska");
-        $("div " + "#" +  senderName).append( '<div class="frame">' + senderName+" "+ nDate + ": " + text + ' </div>');
+        $("div " + "#" +  senderName).append( '<div class="frame"> <div class="header-msg"> <span class="msgr">' + senderName + "</span> <span class='msg-date'>"+ nDate + "</span> </div> <div class='msg-content'>" + text + '</div> </div>');
         //refreshTabs();
       }
       else if(receiverName === me && senderIsTabbed < 0){
-        console.log("ghjsll");
+        console.log("4");
           initializeTab();
           createTab(senderName);
           //addNewMessage(text, date, senderName);
           var tabUserId = senderName;
-          $('#tabs ').append('<div style="display: block;" id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame">'+
-          senderName +" "+ nDate + ": " + text
-              + ' </div>' + '</div>');
+          $('#tabs ').append('<div style="display: block;" id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame"> <div class="header-msg"> <span class="msgr">'+
+          senderName +" </span> <span class='msg-date'>"+ nDate + "</span></div> <div class='msg-content'>" + text
+              + '</div> </div>' + '</div>');
           refreshTabs();
           usersIncluded.push(senderName);
       }
@@ -77,7 +88,7 @@ function add_archived_messages(me){
       //     }
       // }
 
-
+        $('.joke-div').remove();
 
     });
     eventsList.once('value', function(messages) {
@@ -128,11 +139,11 @@ function initializeTab() {
   });
 }
 
-function addNewMessage(text, date, senderName) {
-  var tabUserId = senderName;
-  $('#tabs ').append('<div style="display: block;" id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame">me:' + date + ": " + text
-      + ' </div>' + '</div>');
-}
+// function addNewMessage(text, date, senderName) {
+//   var tabUserId = senderName;
+//   $('#tabs ').append('<div style="display: block;" id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame">me:' + date + ": " + text
+//       + ' </div>' + '</div>');
+// }
 
 // creating new tab with jQuery
 function createTab(senderName) {
@@ -163,3 +174,18 @@ function generateJoke() {
     }
   });
 }
+
+
+var loadFile = function(event) {
+  console.log('execute loadFile');
+  console.log(event);
+   var reader = new FileReader();
+   reader.onload = function(){
+     image = reader.result;
+     console.log(reader.result);
+    //  var output = document.getElementById('output');
+    //  output.src = reader.result;
+   };
+   console.log(event.target.files[0]);
+   reader.readAsDataURL(event.target.files[0]);
+ };

@@ -12,6 +12,8 @@ html, body, #wrapper {
 
 }
 
+
+
 .sub-nav-wrapper {
   margin: 0 25px;
 }
@@ -43,6 +45,7 @@ html, body, #wrapper {
   padding: 5px;
   position: relative;
   top: -20px;
+  font-weight: 500;
 }
 
 .status {
@@ -191,7 +194,8 @@ nav {
 }
 
 .iframe-style {
-  width: 100%;
+  width: 75%;
+  height: 600px;
 }
 
 #sign-out {
@@ -199,4 +203,76 @@ nav {
   position: relative;
   bottom: 10px;
   right: 11px;
+}
+
+.msgr {
+  font-weight: 600;
+}
+
+.msg-date {
+  font-size: 12px;
+  color: #969696;
+  font-weight: bold;
+}
+
+.msg-content {
+  margin-left: 30px;
+}
+
+#tas {
+    padding: 0;
+}
+
+.frame {
+  padding: 10px;
+  border-top: 1px solid #bcdaed;
+  overflow: auto;
+}
+
+.me-wrapper  {
+  float: right;
+}
+
+.my-frame {
+  background: #f4fcff;
+}
+
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+  background: #0079c1;
+  height: 50px;
+  padding: 2px;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {
+  margin: 0;
+}
+
+.ui-tabs .ui-tabs-nav {
+  height: 58px;
+  line-height: 1.5;
+}
+
+.ui-widget.ui-widget-content {
+  padding: 0;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.ui-tabs .ui-tabs-nav li {
+  border-radius: 20px;
+  padding: 0px 10px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px rgba(240, 248, 255, 0.3);
+    border-radius: 15px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
 }
