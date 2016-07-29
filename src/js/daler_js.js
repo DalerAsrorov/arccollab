@@ -1,6 +1,35 @@
 var usersIncluded = [];
 
 
+
+$(document).ready(function(e) {
+  var s = $("#user-tab");
+  var pos = s.position();
+  $("#messagesContent").scroll(function(e) {
+    // e.preventDefault();
+    console.log('scrolling user tab');
+
+      var windowpos = $(window).scrollTop();
+      // s.html("Distance from top:" + pos.top + "<br />Scroll position: " + windowpos);
+      console.log('windowspos', windowpos);
+      console.log('pos.top',  pos.top);
+      if (windowpos >= pos.top ) {
+          s.addClass("stick-tabs");
+      } else {
+          s.removeClass("stick-tabs");
+      }
+  });
+});
+
+// this initializes the dialog (and uses some common options that I do)
+ $("#guideInfoModal").dialog({autoOpen : false, modal : true, show : "blind", hide : "blind"});
+
+ // next add the onclick handler
+ $("#commands-info-button").click(function() {
+   $("#guideInfoModal").dialog("open");
+   return false;
+ });
+
 function add_archived_messages(me){
     var newItems = false;
     var eventsList = new Firebase('https://smartcollab-f40b2.firebaseio.com/messages/');
@@ -189,3 +218,11 @@ var loadFile = function(event) {
    console.log(event.target.files[0]);
    reader.readAsDataURL(event.target.files[0]);
  };
+
+ $('.ui-dialog-titlebar-close').css({
+   'font-size' : '20px',
+   'background' : '#fff',
+   'color' : 'black',
+   'line-height': '0.5'
+});
+ $('.ui-dialog-titlebar-close').append('x');

@@ -2,17 +2,22 @@ html, body, #wrapper {
   margin: 0;
   padding: 0;
   height: 100%;
+  overflow: auto;
 }
 
-#main-section, .grid-container.section-container, .sub-nav-wrapper, .grid-example{
-  height: 100%;
+#main-section, .grid-container.section-container, .sub-nav-wrapper, .grid-example{.text-input
+  height: 80%;
 }
 
 #text-section {
 
 }
 
-
+.info-button {
+  float: right;
+  bottom: 10px;
+  border-radius: 0;
+}
 
 .sub-nav-wrapper {
   margin: 0 25px;
@@ -29,7 +34,8 @@ html, body, #wrapper {
 }
 
 .text-input {
-  padding: 0;
+  float: left;
+  width: 65.15%;
 }
 
 .main-frame {
@@ -72,6 +78,8 @@ html, body, #wrapper {
 .button-input {
   padding: 0;
   height: 50px;
+  width: 16.8%;
+  float: left;
 }
 
 #send-command-button {
@@ -205,6 +213,12 @@ nav {
   right: 11px;
 }
 
+.stick-tabs {
+  position:fixed;
+  top:0px;
+  width: 79.7%;
+}
+
 .msgr {
   font-weight: 600;
 }
@@ -238,7 +252,6 @@ nav {
 }
 
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-  background: #0079c1;
   height: 50px;
   padding: 2px;
 }

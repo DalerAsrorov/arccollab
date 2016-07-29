@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>SmartCollab</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-beta.7/css/calcite-web.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css"charset="utf-8">
     <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
@@ -18,10 +18,17 @@
             SmartCollab
           </div>
           <div class="user-info column-25">
+            <button class="info-button" id="commands-info-button" >
+              <span class="glyphicon glyphicon-question-sign"></span>
+            </button>
+
             <button type="button" id="sign-out" name="button">Sign Out</button>
+
+
           </div>
         </div>
       </nav>
+      <!-- Modal -->
       <div id="main-section">
         <div class="grid-container leader-1 section-container">
           <div class="grid-example ">
@@ -45,10 +52,10 @@
             <div id="text-section">
               <div class="text-area row">
                 <form class="form" id="command-form">
-                  <div class="text-input column-20">
+                  <div class="text-input">
                     <input name="name" id="input-chat" placeholder="Enter command here..." />
                   </div>
-                  <div class="button-input column-4">
+                  <div class="button-input">
                     <!-- <input type="file" accept="image/*" onchange="loadFile(event)" id="imageUploadNow"> -->
                     <button type="submit" id="send-command-button" name="button">Send</button>
                   </div>
@@ -58,6 +65,12 @@
           </div>
         </div>
       </div>
+
+
+      <div id="guideInfoModal" title="Command Line Guide">
+             <p>appear now</p>
+      </div>
+
 
     </div>
     <script type="text/javascript">
@@ -78,16 +91,23 @@
         console.log('not seen');
       }
     </script>
+    <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-beta.29/js/calcite-web.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
     <script src="js/libs/gravatar.js"></script>
     <script type="text/javascript" src="node_modules/fine-uploader/fine-uploader/fine-uploader.js"></script>
-    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Just before end of body -->
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://js.arcgis.com/4.0/"></script>
+
     <script type="text/javascript" src="js/global.js"></script>
     <script type="text/javascript" src="js/indhu_js.js"></script>
     <script type="text/javascript" src="js/daler_js.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
+
   </body>
 </html>
