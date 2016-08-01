@@ -12,6 +12,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "fine-uploader": "^5.10.1",
-    "gravatar": "^1.5.2"
+    "gravatar": "^1.5.2",
+    "jquery-modal": "^0.7.0"
   }
 }

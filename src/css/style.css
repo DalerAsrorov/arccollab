@@ -2,7 +2,7 @@ html, body, #wrapper {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
 }
 
 #main-section, .grid-container.section-container, .sub-nav-wrapper, .grid-example{.text-input
@@ -90,6 +90,29 @@ html, body, #wrapper {
 
 .text-input {
   padding-right: 0;
+}
+
+.share-modal-msg-content {
+  padding: 5px;
+  margin: 5px;
+}
+
+.modal-header {
+  padding: 0;
+  padding-bottom: 2px;
+}
+
+.modal-header  h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.sender-capt, .content-caption {
+  font-weight: 600;
+}
+
+.msg-itself {
+  background: #f3f3f3;
 }
 
 .main-frame{
@@ -241,6 +264,11 @@ nav {
   padding: 10px;
   border-top: 1px solid #bcdaed;
   overflow: auto;
+}
+
+.frame:hover {
+  cursor: pointer;
+  background: #efefef;
 }
 
 .me-wrapper  {

@@ -3,6 +3,7 @@ generateJoke();
 var success;
 var endpoint;
 var allOnlineUsers = [];
+var me = "";
 var config = {
          apiKey: "AIzaSyB6w2YXSfwIE1E83wT39YrHTODl7QojHWA",
          authDomain: "smartcollab-f40b2.firebaseapp.com",
@@ -38,7 +39,6 @@ firebase.initializeApp(config);
 
       //get_messages();
       var arcUserMessageInfo = null;
-      var me = ""
 
       esriId.registerOAuthInfos([info]);
 
@@ -122,7 +122,7 @@ firebase.initializeApp(config);
         //console.log(selected);
 
         $('.joke-div').remove();
-      
+
         // removeTab();
 
         var dbRef = firebase.database().ref().child('messages');
@@ -144,6 +144,7 @@ firebase.initializeApp(config);
         image = "";
         dbRef.set(obj);
         $('#input-chat').val('');
+        $('#input-chat').val('@' + receivers + ', ');
 
         console.log('reached tabs');
       });

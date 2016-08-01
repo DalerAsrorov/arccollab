@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-beta.7/css/calcite-web.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.css"charset="utf-8">
     <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="node_modules/fine-uploader/fine-uploader/fine-uploader.css" charset="utf-8">
+    <link rel="stylesheet" href="node_modules/jquery-modal/jquery.modal.css" charset="utf-8">
+
   </head>
   <body>
 
@@ -66,9 +67,53 @@
         </div>
       </div>
 
+      <div id="guideInfoModal" style="width: 500px;" class="guide-modal" title="Command Line Guide">
+          <div class="command-line-list">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Arguments</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>open video</td>
+                  <td>[link to the video]</td>
+                  <td>Embeds the given video to the chat. Link required.</td>
+                </tr>
+                <tr>
+                  <td>open web map </td>
+                  <td>[map id OR map name]</td>
+                  <td>Embeds the web map given from the web id or name.</td>
+                </tr>
+                <tr>
+                  <td>show tweets</td>
+                  <td>[n, tag]</td>
+                  <td>Shows n number of tweets given the tag.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
 
-      <div id="guideInfoModal" title="Command Line Guide">
-             <p>appear now</p>
+      <div id="sharePostModal" style="width: 500px;" class="guide-modal" title="Share">
+          <div class="modal-header">
+            <h4> Share the post with... </h4>
+          </div>
+          <div class="share-modal-content">
+            <input type="text" id="userShare" name="name" value="">
+            <div class="share-modal-msg-content">
+              <div class="share-modal-sender-content">
+              </div>
+              <div class="share-modal-sender">
+              </div>
+              <div class="send-button-section">
+                <button type="button" id="sharePostButton" name="button">Share</button>
+              </div>
+            </div>
+          </div>
       </div>
 
 
@@ -98,6 +143,7 @@
     <script type="text/javascript" src="node_modules/fine-uploader/fine-uploader/fine-uploader.js"></script>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="node_modules/jquery-modal/jquery.modal.js"></script>
     <!-- Just before end of body -->
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>

@@ -1,26 +1,24 @@
 var Xray = require("x-ray");
 module.exports = {
-scrape_ytube:function(query,callback){
+scrape_ytube:function(query){
 var xray = new Xray();
 xray('https://www.youtube.com/results?search_query='+query,'.yt-uix-sessionlink.yt-uix-tile-link.yt-ui-ellipsis.yt-ui-ellipsis-2.spf-link ',[{
     a:'',
     href:'@href'
 
 }])(function(err,title){
-    callback(title);
+    return title;
 })
 }
 }
 
-// module.exports = {
-// scrape_google:function(query,callback){
+
+// var Xray = require("x-ray");
 // var xray = new Xray();
-// xray('https://www.google.com/#q='+query,'.yt-uix-sessionlink.yt-uix-tile-link.yt-ui-ellipsis.yt-ui-ellipsis-2.spf-link ',[{
+// xray('https://www.youtube.com/results?search_query=hello','.yt-uix-sessionlink.yt-uix-tile-link.yt-ui-ellipsis.yt-ui-ellipsis-2.spf-link ',[{
 //     a:'',
 //     href:'@href'
 //
 // }])(function(err,title){
-//     callback(title);
+//     console.log(title);
 // })
-// }
-// }
