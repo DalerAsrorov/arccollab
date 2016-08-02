@@ -340,7 +340,7 @@ firebase.initializeApp(config);
             userSelectedClass = "selected-" + arrayOfUsers[i].org;
 
             if(arrayOfUsers[i].org==me) {
-                $('#list-of-users').append("<li class='select-user' onclick=getSelectedUser(\"" + arrayOfUsers[i].org  + "\")> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <span class='particpant-caption'>" + arrayOfUsers[i].org + " (You)</span> <span class='status'>Online</span></li>");
+                $('#list-of-users').append("<li class='select-user' onclick=getSelectedUser(\"" + arrayOfUsers[i].org  + "\")> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <div class='particpant-caption'>" + arrayOfUsers[i].org + " (You)</div> <div class='status'>Online</div></li>");
             }
             else {
                 $('#list-of-users').append("<li class='select-user' onclick=getSelectedUser(\"" + arrayOfUsers[i].org  + "\")> <img class='gravatar' src=\"" +  arrayOfUsers[i].info.gravatar +  "\"/> <span class='particpant-caption'>" + arrayOfUsers[i].org + " </span> <span class='status'>Online</span></li>");

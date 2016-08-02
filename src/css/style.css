@@ -59,23 +59,40 @@ ul li {
 
 .particpant-caption {
   padding: 5px;
-  position: relative;
-  top: -20px;
+  /*position: relative;
+  top: -20px;*/
   font-weight: 500;
+  width: 75%;
+}
+
+.bot-li.select-user {
+  overflow: hidden;
 }
 
 .status {
   position: relative;
-  right: 160px;
+  /* right: 155px; */
   color: #5a9359;
   font-size: 13px;
+  /* top: 25px; */
+  width: 100px;
+  /* margin-left: -75px; */
+  left: 5px;
+  top: -10px;
 }
 
 .status-arcbot {
   position: relative;
-  right: 60px;
+  right: 55px;
   color: #5a9359;
   font-size: 13px;
+  /* top: 22px; */
+  left: 5px;
+  top: -13px;
+}
+
+.header-smart {
+  margin-top: 20px;
 }
 
 .chat-frame {
@@ -199,10 +216,15 @@ nav {
 
 .login-box h1 {
   margin: 0;
+  margin-top: 20px;
 }
 
 .tab-frame {
   display: block;
+}
+
+.button-section {
+  margin-top: 40px
 }
 
 #list-of-users li {
@@ -349,4 +371,12 @@ z-index: 10000000;
 }
 .me-wrapper{
     width:100%;
+}
+
+.particpant-caption, .gravatar, .status {
+  float: left;
+}
+
+.select-user {
+  overflow: auto;
 }

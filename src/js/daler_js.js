@@ -203,7 +203,7 @@ function add_archived_messages(me){
 
           //addExistingMessage(text, date, senderName);
           // $("div " + "#" +  receiverName).append( '<div class="frame my-frame"><div class="me-wrapper"> <div class="header-msg"><span class="msgr">Me </span> <span class="msg-date">' + nDate + "</span> </div> <div class='msg-content'>" + text + ' <span class="post-hide glyphicon glyphicon-arrow-up"> </span> <span class="post-share glyphicon glyphicon-share-alt"></span> </div> </div> </div>');
-          $("div " + "#" +  receiverName).append( '<div class="frame"> <div class="header-msg"> <span class="msgr">Me: '  + "</span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-arrow-up'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text + '</div> </div>');
+          $("div " + "#" +  receiverName).append( '<div class="frame"> <div class="header-msg"> <span class="msgr">Me: '  + "</span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-minus'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text + '</div> </div>');
           //$( "#tabs" ).tabs({ active: # });
           $( "#tabs" ).tabs({ active: 0 });
           refreshTabs();
@@ -216,7 +216,7 @@ function add_archived_messages(me){
           var tabUserId = receiverName;
 
           $('#tabs ').append('<div id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame my-frame"> <div class="me-wrapper"> <div class="header-msg"><span class="msgr">Me </span> <span class="msg-date">' +
-            nDate + "</span> <span class='post-hide glyphicon glyphicon-arrow-up'> </span> <span class='post-share glyphicon glyphicon-share-alt'></span> </div> <div class='msg-content'>" + text
+            nDate + "</span> <span class='post-hide glyphicon glyphicon-minus'> </span> <span class='post-share glyphicon glyphicon-share-alt'></span> </div> <div class='msg-content'>" + text
               + '</span> </div> </div> </div>' + '</div>');
 
           $( "#tabs" ).tabs({ active: 0 });
@@ -230,7 +230,7 @@ function add_archived_messages(me){
         console.log("3");
 
         // $("div " + "#" +  senderName).append( '<div class="frame my-frame"><div class="me-wrapper"> <div class="header-msg"><span class="msgr">' + senderName + '</span> <span class="msg-date">' + nDate + "</span> </div> <div class='msg-content'>" + text + ' <span class="post-hide glyphicon glyphicon-arrow-up"> </span> <span class="post-share glyphicon glyphicon-share-alt"></span> </div> </div> </div>');
-        $("div " + "#" +  senderName).append( '<div class="frame"> <div class="header-msg"> <span class="msgr">' + senderName + "</span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-arrow-up'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text + '</div> </div>');
+        $("div " + "#" +  senderName).append( '<div class="frame"> <div class="header-msg"> <span class="msgr">' + senderName + "</span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon glyphicon-minus'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text + '</div> </div>');
         $( "#tabs" ).tabs({ active: 0 });
         refreshTabs();
       }
@@ -241,7 +241,7 @@ function add_archived_messages(me){
           //addNewMessage(text, date, senderName);
           var tabUserId = senderName;
           $('#tabs ').append('<div style="display: block;" id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame"> <div class="header-msg"> <span class="msgr">'+
-          senderName +" </span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-arrow-up'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text
+          senderName +" </span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-minus'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text
               + '</div> </div>' + '</div>');
           $( "#tabs" ).tabs({ active: 0 });
           refreshTabs();
@@ -249,7 +249,7 @@ function add_archived_messages(me){
       }
 
 
-      // scrolls to the bottom of the div after message is sent 
+      // scrolls to the bottom of the div after message is sent
       var elem = document.getElementById('messagesContent');
       elem.scrollTop = elem.scrollHeight;
 
