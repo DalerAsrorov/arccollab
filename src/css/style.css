@@ -5,6 +5,16 @@ html, body, #wrapper {
   overflow: hidden;
 }
 
+ul li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.app-info {
+  margin-top: 100px;
+}
+
 #main-section, .grid-container.section-container, .sub-nav-wrapper, .grid-example{.text-input
   height: 80%;
 }
@@ -316,4 +326,27 @@ nav {
 .scroll::-webkit-scrollbar-thumb {
     border-radius: 15px;
     -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+}
+#user-tab{
+
+position: fixed;
+width: 79%;
+z-index: 19992828;
+}
+
+.tab-frame.ui-tabs-panel.ui-corner-bottom.ui-widget-content{
+    margin-top:50px;
+}
+
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable{
+
+max-height: 500px;
+z-index: 10000000;
+}
+.share-modal-sender-content{
+    overflow:auto;
+    max-height:200px;
+}
+.me-wrapper{
+    width:100%;
 }

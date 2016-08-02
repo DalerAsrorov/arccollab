@@ -4,6 +4,7 @@ var success;
 var endpoint;
 var allOnlineUsers = [];
 var me = "";
+var token;
 var config = {
          apiKey: "AIzaSyB6w2YXSfwIE1E83wT39YrHTODl7QojHWA",
          authDomain: "smartcollab-f40b2.firebaseapp.com",
@@ -90,7 +91,7 @@ firebase.initializeApp(config);
 
           arcUserMessageInfo = portal.user;
           add_user(portal);
-          const token = portal.credential._oAuthCred.token;
+          token = portal.credential._oAuthCred.token;
         //   localStorage.setItem('token', token);
         //   localStorage.setItem('login', 'true');
         });
@@ -136,7 +137,8 @@ firebase.initializeApp(config);
             receiver_userName: receivers
           },
           text: text_msg,
-          image: image,
+          token:token,
+         // image: image,
           success: success,
           endpoint: endpoint
         }
@@ -145,6 +147,7 @@ firebase.initializeApp(config);
         dbRef.set(obj);
         $('#input-chat').val('');
         $('#input-chat').val('@' + receivers + ', ');
+
 
         console.log('reached tabs');
       });
@@ -365,6 +368,9 @@ firebase.initializeApp(config);
               response($.ui.autocomplete.filter(
                 allOnlineUsers, extractLast( request.term ) ) );
             },
+            open: function(){
+             $(".ui-autocomplete:visible").css({top:"-=145",left:"-=0"});
+           },
             focus: function() {
               // prevent value inserted on focus
               return false;

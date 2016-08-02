@@ -60,7 +60,7 @@ module.exports={
         //console.log(json);
         text = "You have "+json['total']+" search results.<br><ul>";
         for(var i =0 ;i<json['next'];i++){
-          text+="<li>"+json['results'][i]['title']+"   "+json['results'][i]['url']+"</li>";
+          text+="<li>"+json['results'][i]['title']+" <a target='_blank' href=\"  "+json['results'][i]['url']+"\">"+json['results'][i]['url']+"</a></li>";
         }
        text+="</ul>";
         preprocess.write_to_db(receiver,text,"true","");

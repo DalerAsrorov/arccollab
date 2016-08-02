@@ -1,11 +1,11 @@
 var twitter_track = require('./twitter_track');
 var preprocess = require('./util');
-
+var http_module = require('./http_module');
 
 module.exports = {
     invoke_youtube:function(message,receiver){
 
-        message=message.replace("play video ","");
+        message=preprocess.remove_stopwords(message);
         console.log("here");
         console.log(message);
         if(message.indexOf('www')>-1){
@@ -15,32 +15,15 @@ module.exports = {
             text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
             console.log(text);
             write_to_db(receiver,text,"true","");
-        }
+       }
         else {
-            if(message.split(" ").length>1){
-                message=message.split(" ");
-                message=message.join("+");
-            }
-            url="http://localhost:5050/youtube/"+message;
-            console.log("url"+url);
-
-            $.ajax({
-                type: 'GET',
-                url: url,
-                crossDomain:true,
-                success: function( data, textStatus, jQxhr ){
-                    console.log( data );
-                    url = data[0]['href']
-                    url=url.replace("watch?v=","embed/");
-                    text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
-                    write_to_db(receiver,text,"true","");
-                },
-                error: function( jqXhr, textStatus, errorThrown ){
-                    alert("failed");
-                    console.log( errorThrown );
-            }
+            http_module.scrape_ytube(message.join(" "), function(data) {
+              console.log( data );
+              url = data[0]['href']
+              url=url.replace("watch?v=","embed/");
+              text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
+              preprocess.write_to_db(receiver,text,"true","");
             });
-
         }
     },
 

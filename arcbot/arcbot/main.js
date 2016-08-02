@@ -51,6 +51,9 @@ invokeBot : function(message,receiver,success,endpoint,token){
     else if(message.indexOf('search') > -1){
       search.invoke_search_js(message,receiver);
     }
+    else if(message.indexOf('map') > -1 && message.indexOf('web') > -1){
+      maps.invoke_webmap(message,receiver);
+    }
     // else if(message.join(" ").toLowerCase().indexOf('web mapping') > -1){
     //     invoke_webmappingapplication(message,receiver);
     // }
@@ -62,6 +65,20 @@ invokeBot : function(message,receiver,success,endpoint,token){
     }
     else{
       console.log("i did not understand");
+      var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
+      var obj = {
+        user: {
+          receiver_userName: [receiver],
+          sender_userName: "arcbot"
+        },
+        text: "I am sorry. I could not understand the command. Why dont you try something else?!",
+        success:"true",
+        endpoint:""
+
+      }
+
+      dbRef.set(obj);
+
     }
     // else if(message.toLowerCase().indexOf('credits') > -1){
     //     invoke_credits(message,receiver);

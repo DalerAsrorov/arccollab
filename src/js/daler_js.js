@@ -1,6 +1,7 @@
 var usersIncluded = [];
 var msgShareContent = "";
 var msgShareSender = "";
+var postHidden = {};
 
 $(document).ready(function(e) {
   var s = $("#user-tab");
@@ -48,38 +49,109 @@ $(document).ready(function(e) {
    return false;
  });
 
+
+
 $('body').on("click", ".post-hide", function() {
+
    console.log('click .post-hide');
    var $this = $(this);
-   var $parent = $this.parent().parent().parent();
+   var $parent = $this.parent().parent();
    var $content = $parent.find('.msg-content');
-   $content.hide();
+
+   if(postHidden[$content] !== false) {
+     $content.hide();
+     postHidden[$content] = false; // hidden is equal true
+   } else if(postHidden[$content] !== true) {
+     $content.show();
+     postHidden[$content] = true; // hidden is equal true
+   }
+
+
+
+
 });
 
- $( "body" ).on("click", ".frame", function() {
+$('body').on("click", ".post-share", function() {
+   console.log('click .post-share');
    var $this = $(this);
-   var $me = $this.find('.msgr');
-   var sender = $me.text(); // sender
-   var $msgContent = $this.find('.msg-content');
-   var msgContent = $msgContent.text();
+   var $parent = $this.parent().parent();
+   var $me = $parent.find('.msgr');
+   var $sender = $me.text(); // sender
+   var $content = $parent.find('.msg-content');
+   msgShareContent = $content.html();
+   msgShareSender = $sender;
+   console.log(msgShareContent);
+   console.log(msgShareSender);
 
-    $('#userShare').empty();
+   $('#userShare').empty();
    $('.share-modal-sender').empty();
    $('.share-modal-sender-content').empty();
-   $('.share-modal-sender').append("<div class='sender-caption'>" + "<span class='sender-capt'> Sender: </span>"+ me + "</div>");
+
+   $('.share-modal-sender').append("<div class='sender-caption'>" + "<span class='sender-capt'> Sender: </span>"+ msgShareSender + "</div>");
    $('.share-modal-sender-content').append("<div class='content-caption'> Message: </div>");
-   $('.share-modal-sender-content').append("<div class='msg-itself'>" + msgContent + "</div>");
+   $('.share-modal-sender-content').append("<div class='msg-itself'>" + msgShareContent + "</div>");
 
    $("#sharePostModal").dialog("open");
-   msgShareContent = msgContent;
-   msgShareSender = sender;
 
- });
+ //  $content.hide();
+});
+
+ // $( "body" ).on("click", ".frame", function() {
+ //   var $this = $(this);
+ //   var $me = $this.find('.msgr');
+ //   var sender = $me.text(); // sender
+ //   var $msgContent = $this.find('.msg-content');
+ //   var msgContent = $msgContent.html();
+ //
+ //    $('#userShare').empty();
+ //   $('.share-modal-sender').empty();
+ //   $('.share-modal-sender-content').empty();
+ //   $('.share-modal-sender').append("<div class='sender-caption'>" + "<span class='sender-capt'> Sender: </span>"+ me + "</div>");
+ //   $('.share-modal-sender-content').append("<div class='content-caption'> Message: </div>");
+ //   $('.share-modal-sender-content').append("<div class='msg-itself'>" + msgContent + "</div>");
+ //
+ //   $("#sharePostModal").dialog("open");
+ //   msgShareContent = msgContent;
+ //   msgShareSender = sender;
+ //
+ // });
 
 
 $('#sharePostButton').click(function() {
+
   var msgShareList = $('#userShare').val();
   var msgShareListSplit = msgShareList.split(",");
+
+      if(msgShareListSplit.indexOf("everyone") > -1){
+
+        console.log("hello i am inside if");
+        msgShareListSplit = allOnlineUsers.slice(0);
+
+        for(var i=0;i<msgShareListSplit.length;i++){
+
+            msgShareListSplit[i] = msgShareListSplit[i].replace("@","");
+        }
+
+        console.log("before");
+        console.log(msgShareListSplit);
+        if(msgShareListSplit.indexOf(me) > -1){
+          console.log("iffffffffffffffffffffffff1");
+          msgShareListSplit.splice(msgShareListSplit.indexOf(me),1);
+        }
+        if(msgShareListSplit.indexOf("arcbot") > -1){
+          console.log("iffffffffffffffffffffffff2");
+          msgShareListSplit.splice(msgShareListSplit.indexOf("arcbot"),1);
+        }
+
+    }
+        //console.log(me);
+
+
+
+
+
+
+console.log("after");
   console.log(msgShareListSplit);
   var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
   var obj = {
@@ -124,14 +196,16 @@ function add_archived_messages(me){
       var nDate = date.toLocaleString();
       //for(var each_receiverName in receiverName){
 
-
+      var tabIndex = 0;
 
       if(senderName === me && receiverIsTabbed >= 0) {
           console.log("1");
 
           //addExistingMessage(text, date, senderName);
-          $("div " + "#" +  receiverName).append( '<div class="frame my-frame"><div class="me-wrapper"> <div class="header-msg"><span class="msgr">Me </span> <span class="msg-date">' + nDate + "</span> </div> <div class='msg-content'>" + text + ' <span class="post-hide glyphicon glyphicon-arrow-up"> </span> <span class="post-hide glyphicon glyphicon-arrow-up"></span> </div> </div> </div>');
+          // $("div " + "#" +  receiverName).append( '<div class="frame my-frame"><div class="me-wrapper"> <div class="header-msg"><span class="msgr">Me </span> <span class="msg-date">' + nDate + "</span> </div> <div class='msg-content'>" + text + ' <span class="post-hide glyphicon glyphicon-arrow-up"> </span> <span class="post-share glyphicon glyphicon-share-alt"></span> </div> </div> </div>');
+          $("div " + "#" +  receiverName).append( '<div class="frame"> <div class="header-msg"> <span class="msgr">Me: '  + "</span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-arrow-up'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text + '</div> </div>');
           //$( "#tabs" ).tabs({ active: # });
+          $( "#tabs" ).tabs({ active: 0 });
           refreshTabs();
         }
         else if(senderName === me && receiverIsTabbed < 0) {
@@ -142,8 +216,10 @@ function add_archived_messages(me){
           var tabUserId = receiverName;
 
           $('#tabs ').append('<div id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame my-frame"> <div class="me-wrapper"> <div class="header-msg"><span class="msgr">Me </span> <span class="msg-date">' +
-            nDate + "</span> <span class='post-hide glyphicon glyphicon-arrow-up'> </div> <div class='msg-content'>" + text
+            nDate + "</span> <span class='post-hide glyphicon glyphicon-arrow-up'> </span> <span class='post-share glyphicon glyphicon-share-alt'></span> </div> <div class='msg-content'>" + text
               + '</span> </div> </div> </div>' + '</div>');
+
+          $( "#tabs" ).tabs({ active: 0 });
           refreshTabs();
           usersIncluded.push(receiverName);
         }
@@ -153,8 +229,10 @@ function add_archived_messages(me){
       {
         console.log("3");
 
-        $("div " + "#" +  senderName).append( '<div class="frame"> <div class="header-msg"> <span class="msgr">' + senderName + "</span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-arrow-up'></span>  </div> <div class='msg-content'>" + text + '</div> </div>');
-        //refreshTabs();
+        // $("div " + "#" +  senderName).append( '<div class="frame my-frame"><div class="me-wrapper"> <div class="header-msg"><span class="msgr">' + senderName + '</span> <span class="msg-date">' + nDate + "</span> </div> <div class='msg-content'>" + text + ' <span class="post-hide glyphicon glyphicon-arrow-up"> </span> <span class="post-share glyphicon glyphicon-share-alt"></span> </div> </div> </div>');
+        $("div " + "#" +  senderName).append( '<div class="frame"> <div class="header-msg"> <span class="msgr">' + senderName + "</span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-arrow-up'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text + '</div> </div>');
+        $( "#tabs" ).tabs({ active: 0 });
+        refreshTabs();
       }
       else if(receiverName === me && senderIsTabbed < 0){
         console.log("4");
@@ -163,13 +241,17 @@ function add_archived_messages(me){
           //addNewMessage(text, date, senderName);
           var tabUserId = senderName;
           $('#tabs ').append('<div style="display: block;" id=\"' + tabUserId + '\"' + ' class="tab-frame">' + '<div class="frame"> <div class="header-msg"> <span class="msgr">'+
-          senderName +" </span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-arrow-up'></span>  </div> <div class='msg-content'>" + text
+          senderName +" </span> <span class='msg-date'>"+ nDate + "</span>  <span class='post-hide glyphicon glyphicon-arrow-up'></span> <span class='post-share glyphicon glyphicon-share-alt'></span>  </div> <div class='msg-content'>" + text
               + '</div> </div>' + '</div>');
+          $( "#tabs" ).tabs({ active: 0 });
           refreshTabs();
           usersIncluded.push(senderName);
       }
 
 
+      // scrolls to the bottom of the div after message is sent 
+      var elem = document.getElementById('messagesContent');
+      elem.scrollTop = elem.scrollHeight;
 
 
       // if(messages['user']['sender_userName']==me){

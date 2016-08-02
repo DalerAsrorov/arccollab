@@ -1,5 +1,5 @@
 function get_senders(allOnlineUsers,text){
-    allOnlineUsers.push("@everyone");
+    //allOnlineUsers.push("@everyone");
     message = text.split(" ");
     sender_list=[];
     msg_list=[]

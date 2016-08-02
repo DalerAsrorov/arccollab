@@ -1,11 +1,18 @@
 var preprocess = require('./util');
 var message_write = require('./firebase_config');
+var request = require('request');
 module.exports = {
+
     invoke_webmap:function(message,receiver){
         console.log("Inside web maps");
         message = preprocess.remove_stopwords(message);
         console.log("Query "+message);
-
+        message_length = 0;
+        for(var i=0;i<message.length;i++){
+            if(message[i]!=""){
+                message_length+=1;
+            }
+        }
         if(message.indexOf('www')>-1){
             url=message;
             console.log(url);
@@ -15,40 +22,28 @@ module.exports = {
             preprocess.write_to_db(receiver,text,"true","");
 
         }
-        else if(message.length==1 && message[0].length==32){
+        else if(message_length==1 && message[0].length==32){
             console.log("hello im an id");
             url="http://www.arcgis.com/home/webmap/viewer.html?webmap="+message[0];
             text="<iframe class='iframe-style map-iframe' src=\"" +url+ "\" ></iframe>";
             console.log(text);
             preprocess.write_to_db(receiver,text,"true","");
         }
-        else if(message.length>=1){
+        else if(message_length>=1){
             console.log(message);
             console.log(message.length);
             console.log("keyword found");
             baseURL="http://www.arcgis.com/sharing/rest/search?num=100&sortField=created&sortOrder=desc&f=pjson&q=type:Web%20Map%20"+message.join(" ");
             console.log(baseURL);
-            $.ajax({
-                type: 'GET',
+            request({url: baseURL, json: true}, function(err, res, json) {
+              if (err) {
+                throw err;
+              }
+            url = "http://www.arcgis.com/home/webmap/viewer.html?webmap="+json['results'][0]['id']
 
-                url: baseURL,
-                crossDomain:true,
-                dataType:'jsonp',
-                success: function( data, textStatus, jQxhr ){
-
-                console.log( data['results'][0]['id'] );
-
-                url = "http://www.arcgis.com/home/webmap/viewer.html?webmap="+data['results'][0]['id']
-
-                text="<iframe class='iframe-style map-iframe' src=\"" +url+ "\" ></iframe>";
-                preprocess.write_to_db(receiver,text,"true","");
-
-                },
-                error: function( jqXhr, textStatus, errorThrown ){
-                    alert("failed");
-                    console.log( errorThrown );
-            }
-            });
+            text="<iframe class='iframe-style map-iframe' src=\"" +url+ "\" ></iframe>";
+            preprocess.write_to_db(receiver,text,"true","");
+          });
 
         }
         else{

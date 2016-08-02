@@ -8,7 +8,7 @@ module.exports = {
     remove_stopwords : function(message){
     //    temp = message;
         //console.log("message "+message);
-        stop_words = ['open','show','display','web','map','maps','mapping','application','tweet','tweets','find','for','you','can','search'];
+        stop_words = ['open','show','play','video','display','web','map','maps','mapping','application','tweet','tweets','find','for','you','can','search'];
         for(var i=0; i < stop_words.length; i++){
         //    console.log("stop words "+stop_words[i]);
             if(message.indexOf(stop_words[i]) > -1){
@@ -66,6 +66,23 @@ module.exports = {
           // i = message.indexOf("
           return "year"
         }
+    },
+
+    get_type :function(message){
+        console.log("checking type");
+        console.log(message);
+        if(message.indexOf("web")> -1 && message.indexOf("map")>-1){
+          // i = message.indexOf("latest");
+          return "web map"
+        }
+        else if(message.indexOf("web")> -1 && message.indexOf("mapping")>-1 && message.indexOf("application")>-1){
+
+            return "web mapping application"
+        }
+        // else if(message.indexOf("year")> -1){
+        //   // i = message.indexOf("
+        //   return "year"
+        // }
     },
 
     write_to_db : function(receiver,text,success,endpoint){
