@@ -373,16 +373,21 @@ z-index: 19992828;
 }
 
 .ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable{
-
-max-height: 500px;
-z-index: 10000000;
+  max-height: 500px;
+  z-index: 9999999999999;
 }
+
 .share-modal-sender-content{
     overflow:auto;
-    max-height:200px;
+    max-height: 200px;
 }
+
 .me-wrapper{
-    width:100%;
+    width: 100%;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
+  cursor: move;
 }
 
 .particpant-caption, .gravatar, .status {

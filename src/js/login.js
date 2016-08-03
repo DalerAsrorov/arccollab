@@ -332,7 +332,7 @@ firebase.initializeApp(config);
               // initializeTab();
               // createTabFromSelected(username);
               $('.joke-div').remove();
-              $('#input-chat').val('@' + username + ',');
+              $('#input-chat').val('@' + username + ', ');
               $("#input-chat").focus();
               console.log(username);
             }
