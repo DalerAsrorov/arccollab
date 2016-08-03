@@ -41,16 +41,21 @@ function get_messages(){
     //called when new messages are added
     eventsList.on('child_added', function(message) {
         if (!newItems) return;
-        sender=message.val()['user']['sender_userName'];
-        var text_message = message.val()['text'];
-        for (var i=0;i<message.val()['user']['receiver_userName'].length;i++){
-            if(message.val()['user']['receiver_userName'][i].indexOf('arcbot') > -1) {
-                console.log(invoke_bot);
-                invoke_bot.invokeBot(text_message,sender,message.val()['success'],message.val()['endpoint'],message.val()['token']);
-                //
-                //
+        // try{
+            sender=message.val()['user']['sender_userName'];
+            var text_message = message.val()['text'];
+            for (var i=0;i<message.val()['user']['receiver_userName'].length;i++){
+                if(message.val()['user']['receiver_userName'][i].indexOf('arcbot') > -1) {
+                    console.log(invoke_bot);
+                    invoke_bot.invokeBot(text_message,sender,message.val()['success'],message.val()['endpoint'],message.val()['token']);
+                    //
+                    //
+                }
             }
-        }
+        // }
+        // catch(err){
+        //     console.log("something fishy");
+        // }
     });
     //called for the archived messages
     eventsList.once('value', function(messages) {

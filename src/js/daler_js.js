@@ -50,9 +50,7 @@ $(document).ready(function(e) {
  });
 
 
-
 $('body').on("click", ".post-hide", function() {
-
    console.log('click .post-hide');
    var $this = $(this);
    var $parent = $this.parent().parent();
@@ -61,14 +59,13 @@ $('body').on("click", ".post-hide", function() {
    if(postHidden[$content] !== false) {
      $content.hide();
      postHidden[$content] = false; // hidden is equal true
+     $this.replaceWith('<span class="post-hide plus-sign glyphicon glyphicon-plus"> </span>');
    } else if(postHidden[$content] !== true) {
+     var $plusSign = $parent.find('.plus-sign');
      $content.show();
      postHidden[$content] = true; // hidden is equal true
+     $plusSign.replaceWith(" <span class='post-hide glyphicon glyphicon-minus'> </span>");
    }
-
-
-
-
 });
 
 $('body').on("click", ".post-share", function() {
@@ -96,6 +93,18 @@ $('body').on("click", ".post-share", function() {
  //  $content.hide();
 });
 
+$('body').on("click", ".close-tab-icon", function() {
+   var $this = $(this);
+   var $liTab = $(this).parent();
+   var $usernameInAnchor = $liTab.find('a').text(); // get the username inside the anhor
+   $usernameInAnchor = $usernameInAnchor.trim().toString();
+   var usernameIndex = usersIncluded.indexOf($usernameInAnchor);
+   $liTab.remove();
+   $('#' + $usernameInAnchor).remove();
+   usersIncluded.splice(usernameIndex, 1);
+   $('#input-chat').val("");
+});
+
  // $( "body" ).on("click", ".frame", function() {
  //   var $this = $(this);
  //   var $me = $this.find('.msgr');
@@ -118,13 +127,10 @@ $('body').on("click", ".post-share", function() {
 
 
 $('#sharePostButton').click(function() {
-
   var msgShareList = $('#userShare').val();
   var msgShareListSplit = msgShareList.split(",");
-
       if(msgShareListSplit.indexOf("everyone") > -1){
 
-        console.log("hello i am inside if");
         msgShareListSplit = allOnlineUsers.slice(0);
 
         for(var i=0;i<msgShareListSplit.length;i++){
@@ -132,27 +138,15 @@ $('#sharePostButton').click(function() {
             msgShareListSplit[i] = msgShareListSplit[i].replace("@","");
         }
 
-        console.log("before");
-        console.log(msgShareListSplit);
         if(msgShareListSplit.indexOf(me) > -1){
-          console.log("iffffffffffffffffffffffff1");
           msgShareListSplit.splice(msgShareListSplit.indexOf(me),1);
         }
         if(msgShareListSplit.indexOf("arcbot") > -1){
-          console.log("iffffffffffffffffffffffff2");
           msgShareListSplit.splice(msgShareListSplit.indexOf("arcbot"),1);
         }
 
     }
-        //console.log(me);
 
-
-
-
-
-
-console.log("after");
-  console.log(msgShareListSplit);
   var dbRef = firebase.database().ref().child('messages').child(new Date().getTime());
   var obj = {
     user: {
@@ -222,6 +216,7 @@ function add_archived_messages(me){
           $( "#tabs" ).tabs({ active: 0 });
           refreshTabs();
           usersIncluded.push(receiverName);
+          console.log('usersIncluded', usersIncluded);
         }
 
     //for(var each_receiverName in receiverName){
@@ -331,14 +326,16 @@ function createTab(senderName) {
     document.getElementById('input-chat').value = '@' + name + ', ';
     console.log('suppose to print', name);
   }
-   $('#user-tab').append('<li onclick="clickTab(\'' + senderName + '\')" class="' + senderName +  '\"><a href=\"' + '#' + senderName +  '\">' + senderName + '</a></li>');
+   $('#user-tab').append('<li onclick="clickTab(\'' + senderName + '\')" class="' + senderName +  '\"><a href=\"' + '#' + senderName +  '\">' + senderName + '</a>' +
+   '<span class="close-tab-icon glyphicon glyphicon-remove-sign"> </span></li>');
    var tabIndex = $('.selected-' + senderName).prop('tabindex');
    // $( "#tabs" ).tabs({active: tabIndex}'option', 'active', tabIndex );
    // adding the frame with the content
 }
 
 function createTabFromSelected(usernameCssClass) {
- $('#user-tab').append('<li class="selected-' + usernameCssClass + '"><a href=\"' + '#' + usernameCssClass +  '\">' + usernameCssClass + '</a></li>');
+ $('#user-tab').append('<li class="selected-' + usernameCssClass + '"><a href=\"' + '#' + usernameCssClass +  '\">' + usernameCssClass + '</a>'
+ + '<span class=""> </span></li>');
  var tabIndex = $('.selected-' + usernameCssClass).prop('tabindex');
  $( "#tabs" ).tabs('option', 'active', tabIndex);
  console.log('createTabFromSelected()');

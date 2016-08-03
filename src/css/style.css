@@ -380,3 +380,16 @@ z-index: 10000000;
 .select-user {
   overflow: auto;
 }
+
+.post-hide {
+  float: right;
+}
+
+.close-tab-icon {
+  margin-top: 10px;
+  padding: 2px;
+}
+
+.close-tab-icon:hover {
+  cursor: pointer;
+}

@@ -15,15 +15,18 @@ module.exports = {
             text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
             console.log(text);
             write_to_db(receiver,text,"true","");
-       }
+        }
         else {
-            http_module.scrape_ytube(message.join(" "), function(data) {
+            http_module.scrape_ytube(message.join(" "), function(data){
               console.log( data );
-              url = data[0]['href']
+              url = data[0]['href'];
               url=url.replace("watch?v=","embed/");
               text="<iframe class='iframe-style' height=\"390\"  src=\"" +url+ "\" ></iframe>";
               preprocess.write_to_db(receiver,text,"true","");
             });
+
+
+
         }
     },
 

@@ -45,6 +45,9 @@ invokeBot : function(message,receiver,success,endpoint,token){
     else if(message.indexOf('groups') > -1){
       org.invoke_groups(message,receiver,token);
     }
+    else if(message.indexOf('maps') > -1 || message.indexOf('scenes') > - 1){
+      search.invoke_maps(message,receiver,token);
+    }
     else if(message.indexOf('privileges') > -1){
       org.invoke_privileges(message,receiver,token);
     }
@@ -53,6 +56,9 @@ invokeBot : function(message,receiver,success,endpoint,token){
     }
     else if(message.indexOf('map') > -1 && message.indexOf('web') > -1){
       maps.invoke_webmap(message,receiver);
+    }
+    else if(message.indexOf('layers') > -1 ){
+      search.invoke_layers(message,receiver,token);
     }
     // else if(message.join(" ").toLowerCase().indexOf('web mapping') > -1){
     //     invoke_webmappingapplication(message,receiver);

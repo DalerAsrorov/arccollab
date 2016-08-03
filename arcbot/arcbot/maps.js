@@ -37,12 +37,19 @@ module.exports = {
             console.log(baseURL);
             request({url: baseURL, json: true}, function(err, res, json) {
               if (err) {
-                throw err;
+                  text = "Oops! This is embarassing. Something went wrong!! Would you mind trying again??"
+                  preprocess.write_to_db(receiver,text,"true","");
               }
-            url = "http://www.arcgis.com/home/webmap/viewer.html?webmap="+json['results'][0]['id']
+              try{
+                url = "http://www.arcgis.com/home/webmap/viewer.html?webmap="+json['results'][0]['id']
 
-            text="<iframe class='iframe-style map-iframe' src=\"" +url+ "\" ></iframe>";
-            preprocess.write_to_db(receiver,text,"true","");
+                text="<iframe class='iframe-style map-iframe' src=\"" +url+ "\" ></iframe>";
+                preprocess.write_to_db(receiver,text,"true","");
+                }
+            catch(err){
+                text = "Oops! This is embarassing. Something went wrong!! Would you mind trying again??"
+                preprocess.write_to_db(receiver,text,"true","");
+            }
           });
 
         }
