@@ -276,12 +276,12 @@ nav {
 
 .msgr {
   font-weight: 600;
+  font-size: 15px;
 }
 
 .msg-date {
   font-size: 12px;
-  color: #969696;
-  font-weight: bold;
+  color: #c1b4b4;
 }
 
 .msg-content {
@@ -292,10 +292,22 @@ nav {
     padding: 0;
 }
 
+#guideInfoModal {
+  padding: 0;
+}
+
+.ui-draggable .ui-dialog-titlebar {
+  background: #bcdaed;
+}
+
 .frame {
   padding: 10px;
   border-top: 1px solid #bcdaed;
   overflow: auto;
+}
+
+.command-line-list .table {
+  margin: 0;
 }
 
 .frame:hover {
