@@ -8,7 +8,7 @@ module.exports = {
     remove_stopwords : function(message){
     //    temp = message;
         //console.log("message "+message);
-        stop_words = ['open','show','display','web','map','maps','mapping','application','tweet', 'play', 'video', 'tweets','find','for','you','can','search','layers','scenes','layer','scene'];
+        stop_words = ['open','show','display', 'more', 'info', 'web','map','maps','mapping','application', 'route', 'tweet', 'play', 'video', 'tweets','find','for','you','can','search','layers','scenes','layer','scene'];
         for(var i=0; i < stop_words.length; i++){
         //    console.log("stop words "+stop_words[i]);
             if(message.indexOf(stop_words[i]) > -1){

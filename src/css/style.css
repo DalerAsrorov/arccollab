@@ -315,13 +315,13 @@ nav {
   background: #efefef;
 }
 
-.me-wrapper  {
+/*.me-wrapper  {
   float: right;
-}
+}*/
 
-.my-frame {
+/*.my-frame {
   background: #f4fcff;
-}
+}*/
 
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
   height: 50px;
@@ -382,8 +382,8 @@ z-index: 19992828;
     max-height: 200px;
 }
 
-.me-wrapper{
-    width: 100%;
+.login-wrapper {
+  margin-top: 45px;
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {

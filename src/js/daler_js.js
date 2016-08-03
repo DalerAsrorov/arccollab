@@ -102,6 +102,10 @@ $('body').on("click", ".close-tab-icon", function() {
    $liTab.remove();
    $('#' + $usernameInAnchor).remove();
    usersIncluded.splice(usernameIndex, 1);
+   if(usersIncluded.length <= 0) {
+     $('#tabs').hide();
+   }
+
    $('#input-chat').val("");
 });
 
@@ -347,11 +351,9 @@ function generateJoke() {
     if(data.type === 'success') {
       var category = data.value.categories[0];
       var joke = data.value.joke;
-      $('#tabs').append('<div class="joke-div">'
-      + '<span class="joke-span">\"' + joke + '\"</span>'
-      + '</div>')
-    } else {
-
+      // $('#tabs').append('<div class="joke-div">'
+      // + '<span class="joke-span">\"' + joke + '\"</span>'
+      // + '</div>')
     }
   });
 }

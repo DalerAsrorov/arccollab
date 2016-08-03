@@ -41,6 +41,7 @@ module.exports = {
                   preprocess.write_to_db(receiver,text,"true","");
               }
               try{
+                id = json['results'][0]['id']; 
                 url = "http://www.arcgis.com/home/webmap/viewer.html?webmap="+json['results'][0]['id']
 
                 text="<iframe class='iframe-style map-iframe' src=\"" +url+ "\" ></iframe>";

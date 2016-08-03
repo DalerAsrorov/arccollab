@@ -60,14 +60,20 @@ invokeBot : function(message,receiver,success,endpoint,token){
     else if(message.indexOf('layers') > -1 ){
       search.invoke_layers(message,receiver,token);
     }
+    else if(message.indexOf('more') > -1 && message.indexOf('info') > -1){
+      search.invoke_maps_info(id,receiver,token);
+    }
     // else if(message.join(" ").toLowerCase().indexOf('web mapping') > -1){
     //     invoke_webmappingapplication(message,receiver);
     // }
-    // else if(message.indexOf('web') > -1 && message.indexOf('map') > -1){
-    //     maps.invoke_webmap(message,receiver);
-    // }
+    else if(message.indexOf('web') > -1 && message.indexOf('map') > -1){
+        maps.invoke_webmap(message,receiver);
+    }
     else if(message.indexOf('tweet') > -1 ){
         media.invoke_tweet(message,receiver);
+    }
+    else if(message.indexOf('route') > -1 ){
+      search.invoke_route(message,receiver,token);
     }
     else{
       console.log("i did not understand");

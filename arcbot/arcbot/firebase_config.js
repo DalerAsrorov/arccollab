@@ -2,6 +2,7 @@ var firebase = require('firebase')
 var invoke_bot = require('./main')
 var archived_message ="";
 var archived_tweet ="";
+var id;
 var config = {
     apiKey: "AIzaSyB6w2YXSfwIE1E83wT39YrHTODl7QojHWA",
     authDomain: "smartcollab-f40b2.firebaseapp.com",

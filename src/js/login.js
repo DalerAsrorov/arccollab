@@ -121,7 +121,7 @@ firebase.initializeApp(config);
         event.preventDefault();
         var text = $('#input-chat').val();
         //console.log(selected);
-
+        $('#tabs').show();
         $('.joke-div').remove();
 
         // removeTab();
@@ -151,6 +151,8 @@ firebase.initializeApp(config);
 
         console.log('reached tabs');
       });
+
+
 
       function goToBottomOfDiv(id) {
         $(id).scrollTop($(id)[0].scrollHeight);
